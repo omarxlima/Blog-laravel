@@ -9,14 +9,7 @@
         @if (session('message'))
                 <div class="alert alert-success">{{session('message')}}</div>
         @endif
-        <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item active">  Categoria</li>
-        </ol>
-        <div class="row">
-            <div class="col-md-12">
-                @if (session('message'))
-                    <div class="alert alert-success">{{ session('message') }}</div>
-                @endif
+
                 <div class="card">
                     <div class="card-header">
                         <h4>
@@ -40,7 +33,9 @@
                             </thead>
                             <tbody>
 
-                                @foreach ($categorias as $categoria)
+
+
+                                @forelse ($categorias as $categoria)
                                     <tr>
                                         <td>{{ $categoria->id }}</td>
                                         <td>{{ $categoria->name }}</td>
@@ -49,14 +44,28 @@
                                         </td>
                                         <td>{{ $categoria->status == 1 ? 'Hiden' : ' Visible' }}</td>
                                         <td>
-                                            <a href="#"
+                                            <a href="{{ route('categoria.edit', $categoria->id) }}"
                                                 class="btn btn-warning">Editar</a>
+
+                                        </td>
+                                        <td>
+
+                                                <form method="POST" action="{{ route('categoria.destroy', $categoria->id) }}">
+                                                    @csrf
+                                                    @method('delete')
+
+                                                    <button type='submit' class="btn btn-danger" data-toggle="tooltip">
+                                                      Excluir
+                                                    </button>
+                                                    </form>
 
                                         </td>
 
 
                                     </tr>
-                                @endforeach
+                                    @empty
+                                        <p>{{ 'Nenhuma categoria encontrada!'}}</p>
+                                @endforelse
                             </tbody>
                         </table>
 

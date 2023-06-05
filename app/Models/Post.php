@@ -5,17 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Categoria extends Model
+class Post extends Model
 {
     use HasFactory;
 
-    protected $table = 'categorias';
+    protected $table = 'posts';
 
     protected $fillable = [
+        'category_id',
         'name',
         'slug',
         'description',
-        'image',
+        'yt_iframe',
         'meta_title',
         'meta_keyword',
         'navbar_status',
@@ -24,7 +25,7 @@ class Categoria extends Model
 
     ];
 
-    // public function posts() {
-    //     return $this->hasMany(Post::class, 'category_id', 'id');
-    // }
+    public function categoria() {
+        return $this->belongsTo(Categoria::class, 'category_id', 'id');
+    }
 }
