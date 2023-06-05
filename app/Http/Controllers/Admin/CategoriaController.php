@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Auth;
 class CategoriaController extends Controller
 {
     public function index(){
-        return view('admin.categoria.index');
+        $categorias = Categoria::all();
+        return view('admin.categoria.index', compact('categorias'));
     }
 
     public function create(){

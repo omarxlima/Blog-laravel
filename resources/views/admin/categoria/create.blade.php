@@ -63,7 +63,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <button type="submit" class="btn btn-primary">Salvar</button>
+                            <button type="submit" class="btn btn-primary float-end">Salvar</button>
                         </div>
 
                     </div>
