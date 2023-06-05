@@ -47,7 +47,7 @@
 
                     <div class="mb-4">
                         <label for="description" class="form-label">Descrição</label>
-                        <textarea name="description" id="description" cols="30" rows="3" class="form-control">{{ $post->description }}</textarea>
+                        <textarea name="description" id="MySummernote" cols="30" rows="3" class="form-control">{{ $post->description }}</textarea>
                     </div>
                     <div class="mb-4">
                         <label for="yt_iframe" class="form-label">Link Youtube </label>
