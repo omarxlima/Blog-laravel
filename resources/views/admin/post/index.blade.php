@@ -17,14 +17,15 @@
             </div>
 
             <div class="card-body">
-                <table class="table table-bordered">
+                <table id="myTable"class="table table-bordered">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Categoria</th>
                             <th>Nome</th>
                             <th>Status</th>
-                            <th>Ações</th>
+                            <th>Editar</th>
+                            <th>Excluir</th>
                         </tr>
                     </thead>
 
