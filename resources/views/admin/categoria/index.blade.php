@@ -20,7 +20,7 @@
                     </div>
 
                     <div class="card-body">
-                        <table class="table table-bordered table-striped">
+                        <table id="myTable"class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -28,6 +28,7 @@
                                     <th>Imagem</th>
                                     <th>Status</th>
                                     <th>Editar</th>
+                                    <th>Excluir</th>
 
                                 </tr>
                             </thead>
@@ -43,12 +44,12 @@
                                                 <img src="{{asset('uploads/categoria/' .$categoria->image)}}" width="50px" height="50px" alt="imagem-categoria">
                                         </td>
                                         <td>{{ $categoria->status == 1 ? 'Hiden' : ' Visible' }}</td>
-                                        <td>
+                                        <td style="width: 150px">
                                             <a href="{{ route('categoria.edit', $categoria->id) }}"
                                                 class="btn btn-warning">Editar</a>
 
                                         </td>
-                                        <td>
+                                        <td style="width: 150px">
 
                                                 <form method="POST" action="{{ route('categoria.destroy', $categoria->id) }}">
                                                     @csrf
