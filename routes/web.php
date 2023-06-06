@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoriaController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -33,6 +34,10 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::put('/posts/update/{id}', [PostController::class, 'update'])->name('posts.update');
     Route::delete('/posts/delete/{id}', [PostController::class, 'destroy'])->name('posts.destroy');
 
+    //users
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/update/{id}', [UserController::class, 'update'])->name('users.update');
 
 
 
