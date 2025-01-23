@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CategoriaFormRequest;
-use App\Models\Categoria;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -13,7 +13,7 @@ class CategoriaController extends Controller
 {
     public function index()
     {
-        $categorias = Categoria::all();
+        $categorias = Category::all();
         return view('admin.categoria.index', compact('categorias'));
     }
 
@@ -25,7 +25,7 @@ class CategoriaController extends Controller
     public function store(CategoriaFormRequest $request)
     {
         $data = $request->validated();
-        $categoria = new Categoria;
+        $categoria = new Category;
         $categoria->name = $data['name'];
         $categoria->slug = $data['slug'];
         $categoria->description = $data['description'];
@@ -55,14 +55,14 @@ class CategoriaController extends Controller
 
     public function edit($id)
     {
-        $categoria = Categoria::find($id);
+        $categoria = Category::find($id);
         return view('admin.categoria.edit', compact('categoria'));
     }
 
     public function update(CategoriaFormRequest $request, $id)
     {
         $data = $request->validated();
-        $categoria = Categoria::find($id);
+        $categoria = Category::find($id);
         $categoria->name = $data['name'];
         $categoria->slug = $data['slug'];
         $categoria->description = $data['description'];
@@ -86,7 +86,7 @@ class CategoriaController extends Controller
     }
 
     public function destroy($id){
-        $categoria = Categoria::findOrFail($id);
+        $categoria = Category::findOrFail($id);
         $categoria->delete();
         return to_route('categoria.index')->with('message', 'Categoria excluída com sucesso!');
 
