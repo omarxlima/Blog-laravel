@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('meta_title');
             $table->string('meta_keyword')->nullable();
             $table->string('meta_description')->nullable();
+            $table->tinyInteger('navbar_status')->default('0');
 
             $table->tinyInteger('status')->default('0');
             $table->integer('created_by');
