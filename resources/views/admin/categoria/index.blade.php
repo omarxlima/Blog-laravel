@@ -45,7 +45,7 @@
                                         </td>
                                         <td>{{ $categoria->status == 1 ? 'Hiden' : ' Visible' }}</td>
                                         <td style="width: 150px">
-                                            <a href="{{ route('categoria.edit', $categoria->id) }}"
+                                            <a href="{{ route('categoria.edit', ['slug' => $categoria->slug]) }}"
                                                 class="btn btn-warning">Editar</a>
 
                                         </td>

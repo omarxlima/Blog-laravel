@@ -37,17 +37,18 @@ class CategoriaController extends Controller
         return to_route('categoria.index')->with('message', 'Categoria criada com sucesso!');
     }
 
-    public function edit($id)
+    public function edit($slug)
     {
-        $categoria = Category::find($id);
+        $categoria = Category::where('slug',$slug)->first();
         return view('admin.categoria.edit', compact('categoria'));
     }
 
-    public function update(CategoriaFormRequest $request, $id)
+    public function update(CategoriaFormRequest $request, $slug)
     {
+        // dd($request->all());
         $data = $request->validated();
         
-        $this->categoryService->updateCategory($data, $request, $id);
+        $this->categoryService->updateCategory($data, $request, $slug);
 
         return to_route('categoria.index')->with('message', 'Categoria atualizada com sucesso!');
     }
