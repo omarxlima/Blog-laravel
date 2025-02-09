@@ -27,6 +27,6 @@ class UserController extends Controller
 
            return to_route('users.index')->with('message', 'Usuário atualizado com sucesso!');
         }
-        return to_route('users.index')->with('message', 'Usuárioi não encontrado!');
+        return to_route('users.index')->with('message', 'Usuário não encontrado!');
     }
 }
