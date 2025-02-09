@@ -19,13 +19,15 @@ class PostService {
 
     }
 
-    public function updatePost(array $data, $request, $id)
+    public function updatePost(array $data, $request, $slug)
     {
-        $data = Post::find($id);
+        // $data = Post::find($slug);
+        $data = Post::where('slug', $slug)->first();
+
         $data->update([
             ...$request->only(['category_id', 'name', 'slug', 'description', 'yt_iframe', 'meta_title', 'meta_description', 'meta_keyword']),
             'navbar_status' => $request->navbar_status == true ? '1' : '0',
-            'status' => $request->status == true? '1' : '0',
+            'status' => $request->status == true ? '1' : '0',
             'created_by' => Auth::user()->id,
         ]);
         return $data;

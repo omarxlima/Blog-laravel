@@ -17,7 +17,7 @@
             </div>
 
             <div class="card-body">
-                <form action="{{ route('posts.update', $post->id) }}" method="post">
+                <form action="{{ route('posts.update', ['slug' => $post->slug]) }}" method="post">
                     @csrf
                     @method('PUT')
                     <div class="row">
@@ -39,10 +39,6 @@
                             <input type="text" class="form-control" name="name" value="{{$post->name}}">
                         </div>
 
-                        <div class="col mb-3">
-                            <label for="slug" class="form-label">Slug</label>
-                            <input type="text" class="form-control" name="slug" value="{{$post->slug}}">
-                        </div>
                     </div>
 
                     <div class="mb-4">

@@ -24,7 +24,6 @@ class PostFormRequest extends FormRequest
         return [
             'category_id' => 'required|integer',
             'name' => 'required|string|max:200',
-            'slug' => 'required|string|max:200',
             'description' => 'required',
             'yt_iframe' => 'nullable',
             'meta_title' => 'required|string|max:200',

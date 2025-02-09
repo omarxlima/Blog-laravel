@@ -37,7 +37,7 @@
                             <td> {{$post->name}} </td>
                             <td> {{$post->status == '1'? 'Inativo': 'Ativo'}} </td>
                             <td>
-                                <a href="{{ route('posts.edit', $post->id)}}" class="btn btn-warning">Editar</a>
+                                <a href="{{ route('posts.edit', ['slug' => $post->slug])}}" class="btn btn-warning">Editar</a>
                             </td>
                             <td>
                                 <form action="{{ route('posts.destroy', $post->id) }}" method="post">

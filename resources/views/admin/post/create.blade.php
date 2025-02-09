@@ -45,14 +45,7 @@
                         @enderror
                     </div>
 
-                    <div class="col mb-3">
-                        <label for="slug" class="form-label">Slug</label>
-                        <input type="text" class="form-control @error('slug') is-invalid @enderror" name="slug">
-
-                        @error('slug')
-                        <div class="text-danger">{{ $message }}</div>
-                        @enderror
-                    </div>
+                  
                 </div>
 
                 <div class="mb-4">

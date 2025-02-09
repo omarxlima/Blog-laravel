@@ -40,19 +40,19 @@ class PostController extends Controller
         return to_route('posts.index')->with('message', 'Post criado com sucesso!');
     }
 
-    public function edit($id)
+    public function edit($slug)
     {
-        $post = Post::find($id);
+        $post = Post::where('slug', $slug)->first();
         $categorias = Category::where('status', '0')->get();
         return view('admin.post.edit', compact('post', 'categorias'));
     }
 
-    public function update(PostFormRequest $request, $id)
+    public function update(PostFormRequest $request, $slug)
     {
 
         $data = $request->validated();
 
-        $this->postService->updatePost($data, $request, $id);
+        $this->postService->updatePost($data, $request, $slug);
 
         return to_route('posts.index')->with('message', 'Post atualizado com sucesso!');
     }
