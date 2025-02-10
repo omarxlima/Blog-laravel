@@ -18,7 +18,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/', [HomePageController::class, 'index'])->name('home_page.index');
 Route::get('/tutorial/{slug}', [HomePageController::class, 'viewCategoryPost'])->name('home_page.view');
-// Route::get('/tutorial/{slug}/{post}', [HomePageController::class, 'viewCategoryPost'])->name('home_page.view');
+Route::get('/tutorial/{category_slug}/{post_slug}', [HomePageController::class, 'viewPost'])->name('home_page.view.post');
 
 
 

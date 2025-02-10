@@ -33,7 +33,7 @@
                         @foreach ( $posts as $post )
                         <tr>
                             <td>{{$post->id}}</td>
-                            <td> {{ $post->categoria->name }} </td>
+                            <td> {{ $post->category->name }} </td>
                             <td> {{$post->name}} </td>
                             <td> {{$post->status == '1'? 'Inativo': 'Ativo'}} </td>
                             <td>
