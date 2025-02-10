@@ -23,15 +23,19 @@
                         </h6>
 
                     </div>
-                </div>         
+                </div>  
                 @empty
                 <div class="card card-shadow mt-4">
                     <div class="card-body">
                         <h2 class="post-heading"> Nenhuma postagem disponível </h2>
                     </div>
                     
-                @endforelse
-
+                    @endforelse
+                    
+                    {{-- Paginate         --}}
+                    <div class="your-paginate mt-4">
+                        {{ $post->links() }}
+                    </div>
 
             </div>
             <div class="col-md-3">

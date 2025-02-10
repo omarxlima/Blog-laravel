@@ -18,7 +18,7 @@ class HomePageController extends Controller
     {
         $category = Category::where('slug', $slug)->where('status', '0')->first();
         if ($category) {
-            $post = Post::where('category_id', $category->id)->where('status', '0')->paginate();
+            $post = Post::where('category_id', $category->id)->where('status', '0')->paginate(2);
             return view('homePage.post.index', compact('post', 'category'));
         }
         return redirect()->route('home_page.index');
