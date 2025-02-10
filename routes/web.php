@@ -4,18 +4,23 @@ use App\Http\Controllers\Admin\CategoriaController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\HomePage\HomePageController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/', [HomePageController::class, 'index'])->name('home_page.index');
+Route::get('/tutorial/{slug}', [HomePageController::class, 'viewCategoryPost'])->name('home_page.view');
+// Route::get('/tutorial/{slug}/{post}', [HomePageController::class, 'viewCategoryPost'])->name('home_page.view');
+
+
 
 Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
