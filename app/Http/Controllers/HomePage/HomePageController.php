@@ -29,7 +29,9 @@ class HomePageController extends Controller
         $category = Category::where('slug', $category_slug)->where('status', '0')->first();
         if ($category) {
             $post = Post::where('category_id', $category->id)->where('slug', $post_slug)->where('status', '0')->first();
-            return view('homePage.post.view', compact('post'));
+            $latestPosts = Post::where('category_id', $category->id)->where('status', '0')->orderBy('created_at', 'DESC')->get()->take(15);
+
+            return view('homePage.post.view', compact('post', 'latestPosts'));
         }
         return redirect()->route('home_page.index');
     }
