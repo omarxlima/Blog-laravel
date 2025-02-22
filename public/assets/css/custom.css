@@ -15,3 +15,9 @@
     font-size: 26px;
     color: #000;
 }
+
+.custom-img-size {
+    width: 200px;  /* Ajuste a largura para o tamanho desejado */
+    height: 150px; /* Ajuste a altura para o tamanho desejado */
+    object-fit: cover;  /* Isso garante que a imagem será cortada para manter a proporção sem deformação */
+}
