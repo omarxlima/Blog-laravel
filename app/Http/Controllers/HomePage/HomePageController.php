@@ -11,7 +11,8 @@ class HomePageController extends Controller
 {
     public function index()
     {
-        return view('homePage.index');
+        $categoriasHome = Category::where('status', '0')->get();
+        return view('homePage.index', compact('categoriasHome'));
     }
 
     public function viewCategoryPost($slug)
