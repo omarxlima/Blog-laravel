@@ -23,6 +23,8 @@ services:
             - sail
         depends_on:
             - redis
+            - typesense  # Dependência do Typesense para o Laravel
+
     redis:
         image: 'redis:alpine'
         ports:
@@ -38,9 +40,28 @@ services:
                 - ping
             retries: 3
             timeout: 5s
+
+    typesense:  # Configuração do Typesense
+        image: typesense/typesense:28.0
+        restart: on-failure
+        ports:
+            - "8108:8108"  # Mapeando a porta 8108
+        volumes:
+            - ./typesense-data:/data  # Persistindo dados do Typesense
+        command: '--data-dir /data --api-key=xyz --enable-cors'  # Comando de inicialização
+        networks:
+            - sail
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:8108/health"]
+            retries: 3
+            timeout: 5s
+
 networks:
     sail:
         driver: bridge
+
 volumes:
     sail-redis:
+        driver: local
+    typesense-data:  # Volume para dados persistentes do Typesense
         driver: local
