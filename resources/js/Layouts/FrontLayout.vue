@@ -1,5 +1,9 @@
 <template>
   <div class="min-h-screen bg-white dark:bg-slate-900">
+    <!-- Tema no canto -->
+    <div class="fixed right-4 top-4 z-[60]">
+      <ThemeToggle button-class="rounded-lg bg-white/20 p-2.5 text-white shadow-md hover:bg-white/30 focus:ring-2 focus:ring-white/50 dark:bg-slate-800 dark:text-white dark:hover:bg-slate-700" />
+    </div>
     <!-- Header azul estilo TecMundo -->
     <header class="sticky top-0 z-50 bg-[#1A73E8] shadow-md">
       <div class="mx-auto flex h-14 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
@@ -82,6 +86,7 @@
 <script setup>
 import { Link, router, usePage } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import ThemeToggle from '@/Components/ThemeToggle.vue';
 
 const page = usePage();
 const { auth, categoriesNav } = page.props;

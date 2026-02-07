@@ -1,5 +1,8 @@
 <template>
   <div class="min-h-screen bg-slate-100 dark:bg-slate-900">
+    <div class="fixed right-4 top-4 z-[60]">
+      <ThemeToggle />
+    </div>
     <aside class="fixed inset-y-0 left-0 z-40 w-64 border-r border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-800">
       <div class="flex h-16 items-center border-b border-slate-200 px-6 dark:border-slate-700">
         <Link :href="route('dashboard')" class="font-semibold text-slate-800 dark:text-white">Blog Admin</Link>
@@ -79,6 +82,7 @@
 
 <script setup>
 import { Link, router, usePage } from '@inertiajs/vue3';
+import ThemeToggle from '@/Components/ThemeToggle.vue';
 
 defineProps({ title: { type: String, default: 'Admin' } });
 
