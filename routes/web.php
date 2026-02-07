@@ -17,6 +17,8 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/', [HomePageController::class, 'index'])->name('home_page.index');
+Route::get('/busca', [HomePageController::class, 'search'])->name('home_page.search');
+Route::get('/tutoriais', [HomePageController::class, 'allPosts'])->name('home_page.posts');
 Route::get('/tutorial/{slug}', [HomePageController::class, 'viewCategoryPost'])->name('home_page.view');
 Route::get('/tutorial/{category_slug}/{post_slug}', [HomePageController::class, 'viewPost'])->name('home_page.view.post');
 

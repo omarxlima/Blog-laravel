@@ -23,16 +23,20 @@
         </div>
 
         <div class="hidden flex-1 max-w-xl px-4 lg:block">
-          <div class="relative">
+          <form :action="route('home_page.search')" method="get" class="relative">
             <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
               <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             </span>
             <input
               type="search"
+              name="q"
+              v-model="searchQuery"
               placeholder="Busque por notícias, tutoriais, tecnologia..."
               class="w-full rounded-lg border-0 bg-white/95 py-2.5 pl-10 pr-4 text-slate-800 placeholder-slate-500 focus:ring-2 focus:ring-white"
+              required
+              minlength="1"
             />
-          </div>
+          </form>
         </div>
 
         <div class="flex items-center gap-2">
@@ -56,6 +60,22 @@
 
       <!-- Menu mobile / categorias -->
       <div v-show="menuOpen" class="border-t border-white/20 bg-[#1557b0] px-4 py-3 lg:hidden">
+        <form :action="route('home_page.search')" method="get" class="mb-3">
+          <div class="relative">
+            <input
+              type="search"
+              name="q"
+              v-model="searchQuery"
+              placeholder="Buscar..."
+              class="w-full rounded-lg border-0 bg-white/95 py-2 pl-3 pr-4 text-slate-800 placeholder-slate-500"
+              required
+              minlength="1"
+            />
+            <button type="submit" class="absolute right-2 top-1/2 -translate-y-1/2 rounded p-1 text-slate-500 hover:bg-white/20 hover:text-slate-700" aria-label="Buscar">
+              <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </button>
+          </div>
+        </form>
         <div class="flex flex-col gap-2">
           <Link v-for="cat in categoriesNav" :key="cat.id" :href="route('home_page.view', cat.slug)" class="rounded px-3 py-2 text-white hover:bg-white/10">{{ cat.name }}</Link>
           <Link :href="route('home_page.index')" class="rounded px-3 py-2 text-white hover:bg-white/10">Home</Link>
@@ -142,6 +162,7 @@ import ThemeToggle from '@/Components/ThemeToggle.vue';
 const page = usePage();
 const { auth, categoriesNav } = page.props;
 const menuOpen = ref(false);
+const searchQuery = ref('');
 
 function logout() {
   router.post(route('logout'));
