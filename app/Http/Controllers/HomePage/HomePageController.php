@@ -41,6 +41,18 @@ class HomePageController extends Controller
         ]);
     }
 
+    public function allPosts()
+    {
+        $posts = Post::with('category', 'user')
+            ->where('status', '1')
+            ->orderBy('created_at', 'DESC')
+            ->paginate(12);
+
+        return Inertia::render('Home/Posts', [
+            'posts' => $posts,
+        ]);
+    }
+
     public function viewCategoryPost($slug)
     {
         $category = Category::where('slug', $slug)->where('status', '0')->first();

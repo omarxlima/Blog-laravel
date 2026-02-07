@@ -61,6 +61,15 @@
             Nenhuma notícia recente.
           </li>
         </ul>
+        <div class="mt-6">
+          <Link
+            :href="route('home_page.posts')"
+            class="inline-flex items-center gap-2 rounded-lg bg-[#1A73E8] px-5 py-2.5 text-sm font-medium text-white shadow transition hover:bg-[#1557b0] focus:ring-2 focus:ring-[#1A73E8] focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+          >
+            Ver mais postagens
+            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </Link>
+        </div>
       </section>
 
       <!-- Mais lidas (sidebar azul) -->
