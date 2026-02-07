@@ -4,6 +4,16 @@
     <div class="flex gap-8">
       <article class="min-w-0 flex-1">
         <header class="mb-6">
+          <div
+            v-if="post.image"
+            class="mb-6 aspect-video w-full overflow-hidden rounded-xl bg-slate-200 dark:bg-slate-700"
+          >
+            <img
+              :src="`/uploads/posts/${post.image}`"
+              :alt="post.name"
+              class="h-full w-full object-cover"
+            />
+          </div>
           <h1 class="text-3xl font-bold text-slate-900 dark:text-white">
             {{ post.name }}
           </h1>
