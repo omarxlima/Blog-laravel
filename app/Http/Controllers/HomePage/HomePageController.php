@@ -53,6 +53,33 @@ class HomePageController extends Controller
         ]);
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('q', '');
+        $query = trim($query);
+
+        if ($query === '') {
+            return redirect()->route('home_page.index');
+        }
+
+        $posts = Post::with('category', 'user')
+            ->where('status', '1')
+            ->where(function ($q) use ($query) {
+                $q->where('name', 'like', '%' . $query . '%')
+                    ->orWhere('description', 'like', '%' . $query . '%')
+                    ->orWhere('meta_title', 'like', '%' . $query . '%')
+                    ->orWhere('meta_description', 'like', '%' . $query . '%');
+            })
+            ->orderBy('created_at', 'DESC')
+            ->paginate(12)
+            ->withQueryString();
+
+        return Inertia::render('Home/Search', [
+            'posts' => $posts,
+            'query' => $query,
+        ]);
+    }
+
     public function viewCategoryPost($slug)
     {
         $category = Category::where('slug', $slug)->where('status', '0')->first();
