@@ -13,7 +13,32 @@ class HomePageController extends Controller
     public function index()
     {
         $categoriasHome = Category::where('status', '0')->get();
-        return Inertia::render('Home/Index', ['categoriasHome' => $categoriasHome]);
+
+        $featuredPosts = Post::with('category', 'user')
+            ->where('status', '1')
+            ->orderBy('created_at', 'DESC')
+            ->take(3)
+            ->get();
+
+        $latestPosts = Post::with('category', 'user')
+            ->where('status', '1')
+            ->orderBy('created_at', 'DESC')
+            ->skip(3)
+            ->take(5)
+            ->get();
+
+        $mostReadPosts = Post::with('category', 'user')
+            ->where('status', '1')
+            ->orderBy('created_at', 'DESC')
+            ->take(5)
+            ->get();
+
+        return Inertia::render('Home/Index', [
+            'categoriasHome' => $categoriasHome,
+            'featuredPosts' => $featuredPosts,
+            'latestPosts' => $latestPosts,
+            'mostReadPosts' => $mostReadPosts,
+        ]);
     }
 
     public function viewCategoryPost($slug)
@@ -24,7 +49,7 @@ class HomePageController extends Controller
         }
         $post = Post::with('user')
             ->where('category_id', $category->id)
-            ->where('status', '0')
+            ->where('status', '1')
             ->paginate(15);
         return Inertia::render('Category/Show', [
             'category' => $category,
@@ -41,14 +66,14 @@ class HomePageController extends Controller
         $post = Post::with('category', 'user')
             ->where('category_id', $category->id)
             ->where('slug', $post_slug)
-            ->where('status', '0')
+            ->where('status', '1')
             ->first();
         if (!$post) {
             return redirect()->route('home_page.view', $category_slug);
         }
         $latestPosts = Post::with('category')
             ->where('category_id', $category->id)
-            ->where('status', '0')
+            ->where('status', '1')
             ->orderBy('created_at', 'DESC')
             ->take(15)
             ->get();
