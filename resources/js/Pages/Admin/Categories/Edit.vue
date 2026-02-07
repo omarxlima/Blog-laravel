@@ -87,6 +87,7 @@ const props = defineProps({
 });
 
 const form = useForm({
+  _method: 'PUT',
   name: props.categoria.name,
   description: props.categoria.description ?? '',
   image: null,
@@ -99,7 +100,6 @@ const form = useForm({
 
 function submit() {
   form.post(route('categoria.update', props.categoria.slug), {
-    _method: 'put',
     forceFormData: true,
   });
 }
