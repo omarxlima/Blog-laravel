@@ -133,9 +133,20 @@ function postLink(post) {
   return route('home_page.view.post', [cat.slug, post.slug]);
 }
 
+const PLACEHOLDER_IMAGE = 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=300&fit=crop';
+
 function postImage(post) {
-  if (post.category?.image) return `/uploads/categoria/${post.category.image}`;
-  return 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=300&fit=crop';
+  const postImg = post?.image;
+  if (postImg && String(postImg).trim()) {
+    const path = String(postImg).startsWith('uploads/') ? postImg : `uploads/posts/${postImg}`;
+    return path.startsWith('/') ? path : `/${path}`;
+  }
+  const categoryImg = post?.category?.image;
+  if (categoryImg && String(categoryImg).trim()) {
+    const path = String(categoryImg).startsWith('uploads/') ? categoryImg : `uploads/categoria/${categoryImg}`;
+    return path.startsWith('/') ? path : `/${path}`;
+  }
+  return PLACEHOLDER_IMAGE;
 }
 
 function timeAgo(value) {

@@ -31,6 +31,20 @@
           </div>
         </div>
         <div>
+          <label for="image" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Imagem destacada (deixe em branco para manter)</label>
+          <div v-if="post.image" class="mt-1 mb-2">
+            <img :src="`/uploads/posts/${post.image}`" :alt="post.name" class="h-24 w-auto rounded-lg object-cover" />
+          </div>
+          <input
+            type="file"
+            id="image"
+            accept="image/jpeg,image/jpg,image/png"
+            class="mt-1 block w-full text-sm text-slate-600 file:mr-4 file:rounded-lg file:border-0 file:bg-emerald-50 file:px-4 file:py-2 file:text-sm file:font-medium file:text-emerald-700 hover:file:bg-emerald-100 dark:text-slate-400 dark:file:bg-emerald-900/30 dark:file:text-emerald-300"
+            @change="form.image = $event.target.files[0]"
+          />
+          <p v-if="form.errors.image" class="mt-1 text-sm text-red-600">{{ form.errors.image }}</p>
+        </div>
+        <div>
           <label for="description" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Descrição / Conteúdo (HTML)</label>
           <textarea
             id="description"
@@ -99,6 +113,7 @@ const form = useForm({
   category_id: String(props.post.category_id),
   name: props.post.name,
   description: props.post.description ?? '',
+  image: null,
   yt_iframe: props.post.yt_iframe ?? '',
   meta_title: props.post.meta_title ?? '',
   meta_description: props.post.meta_description ?? '',
@@ -108,6 +123,9 @@ const form = useForm({
 });
 
 function submit() {
-  form.put(route('posts.update', props.post.slug));
+  form.post(route('posts.update', props.post.slug), {
+    forceFormData: true,
+    _method: 'put',
+  });
 }
 </script>

@@ -25,6 +25,7 @@ class PostFormRequest extends FormRequest
             'category_id' => 'required|integer',
             'name' => 'required|string|max:200',
             'description' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
             'yt_iframe' => 'nullable',
             'meta_title' => 'required|string|max:200',
             'meta_description' => 'nullable|string',
