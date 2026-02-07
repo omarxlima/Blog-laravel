@@ -18,6 +18,7 @@ class Post extends Model
         'description',
         'yt_iframe',
         'meta_title',
+        'meta_description',
         'meta_keyword',
         'navbar_status',
         'status',

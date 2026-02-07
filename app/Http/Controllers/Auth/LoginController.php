@@ -5,49 +5,30 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Auth;
-use Laravel\Ui\AuthCommand;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
     protected $redirectTo = RouteServiceProvider::HOME;
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-
-     public function authenticated(){
-        if (Auth::user()->role_as == '1') {
-            return redirect('admin/dashboard')->with('status', 'Bem vindo');
-        }elseif(Auth::user()->role_as == '0'){
-            return redirect('home')->with('status', 'Logado com sucesso!');
-
-        }
-     }
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
     }
 
+    public function showLoginForm()
+    {
+        return Inertia::render('Auth/Login');
+    }
 
+    protected function authenticated(Request $request, $user)
+    {
+        if ($user->role_as == '1') {
+            return redirect()->intended(route('dashboard'))->with('message', 'Bem-vindo!');
+        }
+        return redirect()->intended(route('home_page.index'))->with('message', 'Logado com sucesso!');
+    }
 }

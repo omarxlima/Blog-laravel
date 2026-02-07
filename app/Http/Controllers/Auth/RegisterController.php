@@ -41,6 +41,11 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function showRegistrationForm()
+    {
+        return \Inertia\Inertia::render('Auth/Register');
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
