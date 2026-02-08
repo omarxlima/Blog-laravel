@@ -65,25 +65,31 @@ class CategoryService
 
         // return $categoria;
 
-        $data = Category::where('slug', $slug)->first();
+        $categoria = Category::where('slug', $slug)->first();
 
-        // Atualiza os dados da data com o spread operator
-        $data->update([
+        $categoria->update([
             ...$request->only(['name', 'description', 'meta_title', 'meta_description', 'meta_keyword']),
             'navbar_status' => $request->navbar_status === true ? '1' : '0',
             'status' => $request->status === true ? '1' : '0',
             'created_by' => Auth::user()->id,
         ]);
-    
-        // Se houver uma imagem, faz o upload
+
         if ($request->hasFile('image')) {
+            $dir = public_path('uploads/categoria');
+            File::ensureDirectoryExists($dir);
+            if ($categoria->image) {
+                $oldPath = $dir . '/' . $categoria->image;
+                if (File::exists($oldPath)) {
+                    File::delete($oldPath);
+                }
+            }
             $file = $request->file('image');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move('uploads/categoria', $filename);
-            $data->image = $filename; // Atualiza a imagem no modelo
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move($dir, $filename);
+            $categoria->image = $filename;
+            $categoria->save();
         }
-    
-        // Retorna a categoria atualizada
-        return $data;
+
+        return $categoria;
     }
 }

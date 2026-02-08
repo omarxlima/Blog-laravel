@@ -4,6 +4,9 @@
       <div class="mb-6 flex items-center gap-4">
         <Link :href="route('categoria.index')" class="text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white">← Voltar</Link>
       </div>
+      <div v-if="flash?.error" class="mb-4 rounded-lg bg-red-50 p-4 text-sm text-red-800 dark:bg-red-900/30 dark:text-red-300">
+        {{ flash.error }}
+      </div>
       <form @submit.prevent="submit" class="space-y-6 rounded-xl border border-slate-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-800">
         <div>
           <label for="name" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Nome da categoria</label>
@@ -24,10 +27,11 @@
               type="file"
               accept="image/jpeg,image/jpg,image/png"
               class="block text-sm text-slate-500 file:mr-4 file:rounded-lg file:border-0 file:bg-emerald-50 file:px-4 file:py-2 file:text-emerald-700 dark:file:bg-emerald-900/30 dark:file:text-emerald-300"
-              @change="form.image = $event.target.files[0]"
+              @change="onImageChange"
             />
           </div>
           <p v-if="form.errors.image" class="mt-1 text-sm text-red-600">{{ form.errors.image }}</p>
+          <p v-if="imageTooLarge" class="mt-1 text-sm text-red-600">A imagem não pode ter mais de 2 MB. Escolha uma imagem menor.</p>
         </div>
         <div>
           <label for="description" class="block text-sm font-medium text-slate-700 dark:text-slate-300">Descrição</label>
@@ -79,12 +83,20 @@
 </template>
 
 <script setup>
-import { Link, useForm } from '@inertiajs/vue3';
+import { Link, useForm, usePage } from '@inertiajs/vue3';
+import { ref } from 'vue';
 import AdminLayout from '@/Layouts/AdminLayout.vue';
+
+const flash = usePage().props.flash;
+
+const MAX_IMAGE_MB = 2;
+const MAX_IMAGE_BYTES = MAX_IMAGE_MB * 1024 * 1024;
 
 const props = defineProps({
   categoria: { type: Object, required: true },
 });
+
+const imageTooLarge = ref(false);
 
 const form = useForm({
   _method: 'PUT',
@@ -98,7 +110,28 @@ const form = useForm({
   status: props.categoria.status ?? '0',
 });
 
+function onImageChange(event) {
+  imageTooLarge.value = false;
+  const file = event.target.files?.[0];
+  if (!file) {
+    form.image = null;
+    return;
+  }
+  if (file.size > MAX_IMAGE_BYTES) {
+    imageTooLarge.value = true;
+    form.image = null;
+    event.target.value = '';
+    return;
+  }
+  form.image = file;
+}
+
 function submit() {
+  imageTooLarge.value = false;
+  if (form.image && form.image.size > MAX_IMAGE_BYTES) {
+    imageTooLarge.value = true;
+    return;
+  }
   form.post(route('categoria.update', props.categoria.slug), {
     forceFormData: true,
   });

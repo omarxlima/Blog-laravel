@@ -24,12 +24,19 @@ class CategoriaFormRequest extends FormRequest
         return [
             'name' => 'required|string|max:200',
             'description' => 'required',
-            'image' => 'nullable|mimes:jpeg,jpg,png',
+            'image' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
             'meta_title' => 'required|string|max:200',
             'meta_description' => 'required|string',
             'meta_keyword' => 'required|string',
             'meta_status' => 'nullable',
             'status' => 'nullable',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'image.max' => 'A imagem não pode ter mais de 2 MB. Escolha uma imagem menor.',
         ];
     }
 }
